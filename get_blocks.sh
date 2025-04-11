@@ -1,23 +1,21 @@
 #!/bin/bash
 
-# Number of blocks to fetch (first argument)
+# Number of blocks to fetch from the first argument
 NUM_BLOCKS=$1
 OUTPUT_FILE="blocks.json"
 
-# Start JSON array
-# echo "[" > "$OUTPUT_FILE"
+# Start the JSON array
+echo "[" > "$OUTPUT_FILE"
 
-# Get the latest block hash
+# Get latest block hash
 LATEST_HASH=$(wget -qO- "https://api.blockcypher.com/v1/btc/main" | grep -oP '"hash":\s*"\K[^"]+')
 
 for (( i=0; i<NUM_BLOCKS; i++ ))
 do
-   # echo "Fetching block $i with hash: $LATEST_HASH"
-
-    # Fetch full block data
+    # Fetch full block JSON
     BLOCK_JSON=$(wget -qO- "https://api.blockcypher.com/v1/btc/main/blocks/$LATEST_HASH")
 
-    # Extract required fields using grep/sed
+    # Extract fields
     HASH=$(echo "$BLOCK_JSON" | grep -oP '"hash":\s*"\K[^"]+')
     HEIGHT=$(echo "$BLOCK_JSON" | grep -oP '"height":\s*\K[0-9]+')
     TOTAL=$(echo "$BLOCK_JSON" | grep -oP '"total":\s*\K[0-9]+')
@@ -25,33 +23,26 @@ do
     RELAYED_BY=$(echo "$BLOCK_JSON" | grep -oP '"relayed_by":\s*"\K[^"]+')
     PREV_BLOCK=$(echo "$BLOCK_JSON" | grep -oP '"prev_block":\s*"\K[^"]+')
 
-    # Build minimal JSON object
-    echo "  {" >> "$OUTPUT_FILE"
-    echo "    \"hash\": \"$HASH\"," >> "$OUTPUT_FILE"
-    echo "    \"height\": $HEIGHT," >> "$OUTPUT_FILE"
-    echo "    \"total\": $TOTAL," >> "$OUTPUT_FILE"
-    echo "    \"time\": \"$TIME\"," >> "$OUTPUT_FILE"
-    echo "    \"relayed_by\": \"$RELAYED_BY\"," >> "$OUTPUT_FILE"
-    echo "    \"prev_block\": \"$PREV_BLOCK\"" >> "$OUTPUT_FILE"
-    echo -n "  }" >> "$OUTPUT_FILE"
-
-    # Add comma if not the last block
-    if [ $i -lt $((NUM_BLOCKS - 1)) ]; then
+    # Add comma **before** the block, but skip it on the first block
+    if [ $i -ne 0 ]; then
         echo "," >> "$OUTPUT_FILE"
-    else
-        echo "" >> "$OUTPUT_FILE"
     fi
 
-    # Prepare for next iteration
-    LATEST_HASH="$PREV_BLOCK"
-    if [ -z "$LATEST_HASH" ]; then
-        echo "Reached genesis block."
-        break
-    fi
+    # Append block JSON
+    {
+      echo "  {"
+      echo "    \"hash\": \"$HASH\","
+      echo "    \"height\": $HEIGHT,"
+      echo "    \"total\": $TOTAL,"
+      echo "    \"time\": \"$TIME\","
+      echo "    \"relayed_by\": \"$RELAYED_BY\","
+      echo "    \"prev_block\": \"$PREV_BLOCK\""
+      echo -n "  }"
+    } >> "$OUTPUT_FILE"
+
 done
 
-# End JSON array
+# Close the JSON array
+echo "" >> "$OUTPUT_FILE"
 echo "]" >> "$OUTPUT_FILE"
-
-echo "Saved $i block(s) with selected fields to $OUTPUT_FILE"
 
