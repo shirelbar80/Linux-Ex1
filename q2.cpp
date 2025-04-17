@@ -17,19 +17,16 @@ void findHashAndPrintBlock (const string& nameOfFile, const string& hashToFind)
 
     while(getline(file,line))
     {
-        if(line.find(hashToFind) != string::npos)
+        if(line.find("hash: " + hashToFind) != string::npos)
         {
             cout << line << endl;
-            for(i = 0; i < 6; i++)
+            while (getline(file, line))
             {
-                if(getline(file,line))
-                {
-                    cout << line << endl;
-                }
-                else
+                if (line.empty())
                 {
                     break;
                 }
+                cout << line << endl;
             }
             file.close();
             return;
@@ -55,17 +52,15 @@ void findHeightAndPrintBlock (const string& nameOfFile, const string& heightToFi
         if(line.find(heightToFind) != string::npos)
         {
             cout << prevLine << endl;
-            for(i = 0; i < 5; i++)
+            cout << line << endl;
+            while (getline(file, line))
             {
-                if(getline(file,line))
-                {
-                    cout << line << endl;
-                }
-                else
+                if (line.empty())
                 {
                     break;
                 }
-            }
+                cout << line << endl;
+            }            
             file.close();
             return;
         }
