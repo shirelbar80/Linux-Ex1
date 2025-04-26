@@ -2,5 +2,5 @@
 
 #include <string>
 
-void findHashAndPrintBlock (const std::string& nameOfFile, std::string& hashToFind);
-void findHeightAndPrintBlock (const std::string& nameOfFile, std:: string& heightToFind);
+void findHashAndPrintBlock (const std::string& nameOfFile, const std::string& hashToFind);
+void findHeightAndPrintBlock (const std::string& nameOfFile, const std::string& heightToFind);
