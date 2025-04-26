@@ -6,7 +6,8 @@ using namespace std;
 
 int main() {
     // Open the file and check if it is open
-    ifstream file("/home/shirelbar80/Documents/Linux-Ex1/blocks.txt");
+    ifstream file("blocks.txt");
+    // Check if the file is open
     if (!file.is_open()) {
         cerr << "Error: Could not open the file." << std::endl;
         return 1;

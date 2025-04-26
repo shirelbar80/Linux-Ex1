@@ -17,6 +17,7 @@ do
     # Fetch full block JSON
     BLOCK_JSON=$(wget -qO- "https://api.blockcypher.com/v1/btc/main/blocks/$CURRENT_HASH")
 
+
     # Extract fields
     HASH=$(echo "$BLOCK_JSON" | grep -oP '"hash":\s*"\K[^"]+')
     HEIGHT=$(echo "$BLOCK_JSON" | grep -oP '"height":\s*\K[0-9]+')
@@ -40,4 +41,3 @@ do
     # Move to the previous block
     CURRENT_HASH=$PREV_BLOCK
 done
-
