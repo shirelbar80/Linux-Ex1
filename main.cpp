@@ -1,21 +1,23 @@
-#include <iostream>
-#include <string>
-#include "q2.h"
+///*********************************NOT NEEDED********************************************888888 */
 
-using namespace std;
+// #include <iostream>
+// #include <string>
+// #include "q2.h"
 
-int main (int argc, char* argv[])
-{
+// using namespace std;
 
-    if(argc == 3 && ("--hash" == string(argv[1])))
-    {
-        findHashAndPrintBlock("blocks.txt", argv[2]);
-    }
+// int main (int argc, char* argv[])
+// {
 
-    if(argc == 3 && ("--height" == string(argv[1])))
-    {
-        findHeightAndPrintBlock("blocks.txt", argv[2]);
-    }
+//     // if(argc == 3 && ("--hash" == string(argv[1])))
+//     // {
+//     //     findHashAndPrintBlock("blocks.txt", argv[2]);
+//     // }
 
-    return 0;
-}
+//     // if(argc == 3 && ("--height" == string(argv[1])))
+//     // {
+//     //     findHeightAndPrintBlock("blocks.txt", argv[2]);
+//     // }
+
+//     // return 0;
+// }

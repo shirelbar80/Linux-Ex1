@@ -1,10 +1,22 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "utils.h"
 
 using namespace std;
 
+
+
+
 int main() {
+
+    vector<Block> blocks = load_db();
+    printBlocks(blocks);
+    return 0;
+}
+
+
+    /*
     // Open the file and check if it is open
     ifstream file("blocks.txt");
     // Check if the file is open
@@ -12,6 +24,8 @@ int main() {
         cerr << "Error: Could not open the file." << std::endl;
         return 1;
     }
+
+    
 
     string line;
     int currentLine = 0;
@@ -40,4 +54,4 @@ int main() {
 
     file.close();
     return 0;
-}
+    */

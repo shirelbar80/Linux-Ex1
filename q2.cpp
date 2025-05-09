@@ -1,10 +1,41 @@
-#include "q2.h"
+#include "utils.h"
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-void findHashAndPrintBlock (const string& nameOfFile, const string& hashToFind)
+
+
+
+int main(int argc, char* argv[]) {
+
+
+    if (argc != 3) {
+        cerr << "Usage: " << argv[0] << " --hash <value> OR --height <value>\n";
+        return 1;
+    }
+
+    string option = argv[1];
+    string value = argv[2];
+    vector<Block> blocks = load_db();
+
+    if (option == "--hash") {
+        findAndPrintBlockByField("hash", value, blocks);
+    } else if (option == "--height") {
+        findAndPrintBlockByField("height", value, blocks);
+    } else {
+        cerr << "Invalid option: " << option << "\nUse --hash or --height\n";
+        return 1;
+    }
+
+    return 0;
+}
+
+
+
+/////////// NEW FUNCTIONS IN UTILS ///////////
+
+/*void findHashAndPrintBlock (const string& nameOfFile, const string& hashToFind)
 {
     int i;
     string line;
@@ -34,9 +65,9 @@ void findHashAndPrintBlock (const string& nameOfFile, const string& hashToFind)
     }
 
     file.close();
-}
+}*/
 
-void findHeightAndPrintBlock (const string& nameOfFile, const string& heightToFind)
+/*void findHeightAndPrintBlock (const string& nameOfFile, const string& heightToFind)
 {
     int i;
     string prevLine, line;
@@ -68,4 +99,4 @@ void findHeightAndPrintBlock (const string& nameOfFile, const string& heightToFi
     }
 
     file.close();
-}
+}*/

@@ -1,8 +1,16 @@
-#include <iostream>
+#include "utils.h"
 #include <fstream>
+#include <iostream>
 #include <string>
+#include <vector>
+
 
 int main() {
+    
+    ExportTxtToCSV();
+    return 0;
+}
+        /*
     //opening the input and output files
     std::ifstream inputFile("blocks.txt");
     std::ofstream outputFile("blocks.csv");
@@ -53,6 +61,7 @@ int main() {
     //closing the files
     inputFile.close();
     outputFile.close();
+*/
 
-    return 0;
-}
+
+
