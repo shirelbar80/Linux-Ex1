@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "printer.h"
 #include <iostream>
 #include <fstream>
 
@@ -11,7 +12,7 @@ int main(int argc, char* argv[]) {
 
 
     if (argc != 3) {
-        cerr << "Usage: " << argv[0] << " --hash <value> OR --height <value>\n";
+        print_error("Usage: " + string(argv[0]) + " --hash <value> OR --height <value>\n");
         return 1;
     }
 
@@ -24,7 +25,7 @@ int main(int argc, char* argv[]) {
     } else if (option == "--height") {
         findAndPrintBlockByField("height", value, blocks);
     } else {
-        cerr << "Invalid option: " << option << "\nUse --hash or --height\n";
+        print_output("Invalid option: " + option + "\nUse --hash or --height\n");
         return 1;
     }
 

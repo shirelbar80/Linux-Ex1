@@ -1,3 +1,4 @@
+#include "printer.h"
 #include "utils.h"
 #include <fstream>
 #include <iostream>
@@ -6,7 +7,7 @@
 
 using namespace std;
 
-void PrintMenu();
+//void PrintMenu();
 void RunQ5();
 void ExecuteChoice(int choiceNum, vector<Block> blocks);
 
@@ -15,22 +16,21 @@ int main() {
     return 0;
 }
 
-void PrintMenu()
-{
-    cout << "Choose an option:" << endl;
-    cout << "1. Print db" << endl;
-    cout << "2. Print block by hash" << endl;
-    cout << "3. Print block by height" << endl;
-    cout << "4. Export data to csv" << endl;
-    cout << "5. Refresh data" << endl;
-    cout << "Enter your choice: ";
-}
+// void PrintMenu()
+// {
+//     cout << "Choose an option:" << endl;
+//     cout << "1. Print db" << endl;
+//     cout << "2. Print block by hash" << endl;
+//     cout << "3. Print block by height" << endl;
+//     cout << "4. Export data to csv" << endl;
+//     cout << "5. Refresh data" << endl;
+//     cout << "Enter your choice: ";
+// }
 
 void RunQ5() {
 
     vector<Block> blocks = load_db();
-    cout << "Loaded " << blocks.size() << " blocks." << endl;  // <-- add this
-
+    print_output("Loaded " + to_string(blocks.size()) + " blocks.\n");
     PrintMenu();
     int choice;
     cin >> choice;
@@ -46,23 +46,26 @@ void ExecuteChoice (int choiceNum, vector<Block> blocks)
     else if (choiceNum == 2)
     {
         string hashNumber;
-        cout << "Enter block hash: " << endl;
+        print_output("Enter block hash: \n");
         cin >> hashNumber;
-        findAndPrintBlockByField("--hash", hashNumber, blocks);
+        findAndPrintBlockByField("hash", hashNumber, blocks);
     }
     else if (choiceNum == 3)
     {
         string heightNumber;
-        cout << "Enter block height: " << endl;
+        print_output("Enter block height: \n");
         cin >> heightNumber;
-        findAndPrintBlockByField("--height", heightNumber, blocks);
+        findAndPrintBlockByField("height", heightNumber, blocks);
     }
     else if (choiceNum == 4)
     {
         ExportTxtToCSV();
     }
-    else if (choiceNum == 5)
+    else if (choiceNum == 5) 
     {
-        //add after shirel fix
+    int numOfNewBlocks;
+    print_output("Enter number of blocks to fetch: ");
+    cin >> numOfNewBlocks;
+    refreshData(numOfNewBlocks);
     }
 }

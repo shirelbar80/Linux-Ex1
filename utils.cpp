@@ -1,4 +1,6 @@
 #include "utils.h"
+#include "printer.h" 
+
 
 
 vector<Block> load_db() {
@@ -6,7 +8,7 @@ vector<Block> load_db() {
     vector<Block> blocks;
 
     if (!file) {
-        cerr << "Failed to open file: blocks.txt" << endl;
+        print_error("Failed to open file: blocks.txt\n");
         return blocks;
     }
 
@@ -33,21 +35,21 @@ vector<Block> load_db() {
     return blocks;
 }
 
-void printBlock(const Block& block) {
-    std::cout << "hash: " << block.hash << std::endl;
-    std::cout << "height: " << block.height << std::endl;
-    std::cout << "total: " << block.total << std::endl;
-    std::cout << "time: " << block.time << std::endl;
-    std::cout << "relayed_by: " << block.relayed_by << std::endl;
-    std::cout << "previous_block: " << block.previous_block << std::endl;
-}
+// void printBlock(const Block& block) {
+//     std::cout << "hash: " << block.hash << std::endl;
+//     std::cout << "height: " << block.height << std::endl;
+//     std::cout << "total: " << block.total << std::endl;
+//     std::cout << "time: " << block.time << std::endl;
+//     std::cout << "relayed_by: " << block.relayed_by << std::endl;
+//     std::cout << "previous_block: " << block.previous_block << std::endl;
+// }
 
 //print the db
 void printBlocks(const vector<Block>& blocks) {
     for (size_t i = 0; i < blocks.size(); ++i) {
         printBlock(blocks[i]);
         if (i != blocks.size() - 1) {
-            std::cout << "|\n|\n|\nV\n";
+            print_output("|\n|\n|\nV\n");
         }
     }
 }
@@ -63,7 +65,7 @@ void findAndPrintBlockByField(const string& field, const string& value, vector<B
         }
     }
 
-    std::cout << "No matching block found for " << field << ": " << value << endl;
+    printNotFoundMessage(field, value);
 }
 
 // Converts blocks.txt to a.csv
@@ -72,7 +74,7 @@ void ExportTxtToCSV() {
     std::ofstream outputFile("a.csv");  // <-- writes to a.csv automatically
 
     if (!inputFile.is_open() || !outputFile.is_open()) {
-        std::cerr << "Error opening input or output file!" << std::endl;
+        print_error("Error opening input or output file!\n");
         return;
     }
 
@@ -120,4 +122,10 @@ void ExportTxtToCSV() {
     std::string value = rawLine.substr(delimiterPos + 1);
     size_t firstNonSpace = value.find_first_not_of(' ');
     return (firstNonSpace != std::string::npos) ? value.substr(firstNonSpace) : "";
+}
+
+void refreshData(int numBlocks) 
+{
+    string command = "./get_blocks.sh " + to_string(numBlocks);
+    system(command.c_str());
 }
