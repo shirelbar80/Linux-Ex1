@@ -2,7 +2,6 @@
 #include "printer.h" 
 
 
-
 vector<Block> load_db() {
     ifstream file("blocks.txt");
     vector<Block> blocks;
@@ -35,15 +34,6 @@ vector<Block> load_db() {
     return blocks;
 }
 
-// void printBlock(const Block& block) {
-//     std::cout << "hash: " << block.hash << std::endl;
-//     std::cout << "height: " << block.height << std::endl;
-//     std::cout << "total: " << block.total << std::endl;
-//     std::cout << "time: " << block.time << std::endl;
-//     std::cout << "relayed_by: " << block.relayed_by << std::endl;
-//     std::cout << "previous_block: " << block.previous_block << std::endl;
-// }
-
 //print the db
 void printBlocks(const vector<Block>& blocks) {
     for (size_t i = 0; i < blocks.size(); ++i) {
@@ -71,7 +61,7 @@ void findAndPrintBlockByField(const string& field, const string& value, vector<B
 // Converts blocks.txt to a.csv
 void ExportTxtToCSV() {
     std::ifstream inputFile("blocks.txt");
-    std::ofstream outputFile("a.csv");  // <-- writes to a.csv automatically
+    std::ofstream outputFile("blocks.csv");  // <-- writes to blocks.csv automatically
 
     if (!inputFile.is_open() || !outputFile.is_open()) {
         print_error("Error opening input or output file!\n");

@@ -7,30 +7,21 @@
 
 using namespace std;
 
-//void PrintMenu();
 void RunQ5();
 void ExecuteChoice(int choiceNum, vector<Block> blocks);
 
 int main() {
-    RunQ5();
+    
+    while(true){
+        RunQ5();
+    }
+
     return 0;
 }
-
-// void PrintMenu()
-// {
-//     cout << "Choose an option:" << endl;
-//     cout << "1. Print db" << endl;
-//     cout << "2. Print block by hash" << endl;
-//     cout << "3. Print block by height" << endl;
-//     cout << "4. Export data to csv" << endl;
-//     cout << "5. Refresh data" << endl;
-//     cout << "Enter your choice: ";
-// }
 
 void RunQ5() {
 
     vector<Block> blocks = load_db();
-    print_output("Loaded " + to_string(blocks.size()) + " blocks.\n");
     PrintMenu();
     int choice;
     cin >> choice;
